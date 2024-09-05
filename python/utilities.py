@@ -1,0 +1,51 @@
+import requests
+import json
+
+config_file = open('config.json')
+config = json.load(config_file)
+
+"""
+    Generates OAuth header to connect to websocket and refdata APIs
+
+    Returns:
+        str: The OAuth header with the format 'Bearer {Access Token}'
+"""
+def generate_auth_header():
+    auth_url = config["auth_url"]
+    client_id = config["client_id"]
+    client_secret = config["client_secret"]
+    auth_response = requests.post(auth_url,
+                              data={'grant_type': 'client_credentials'},
+                              auth=(client_id, client_secret)
+                              )
+    access_token = auth_response.json()['access_token']
+    return f'Bearer {access_token}'
+
+
+"""
+    Sends websocket TRD and STAT subscription message 
+
+    Args:
+        ws (WebSocket): the websocket object from the connection
+        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
+        security_type (str): FUT or OPT
+
+    Returns:
+        json: The websocket object for further processing
+"""
+def send_subscription_message(ws, product_sub, security_type):
+    subscription_message = {
+        "header": {
+            "messageType": "SUBSCRIBE"
+        },
+        "payload": {
+            "subscriptionMessageTypes": ["STAT", "TRD"],
+            "subscriptions": [{
+                "productType": security_type,
+                "productCode": f"{product_sub}"
+            }]
+        }
+    }
+
+    ws.send(json.dumps(subscription_message))
+    return ws
