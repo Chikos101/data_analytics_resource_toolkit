@@ -76,7 +76,7 @@ Inputs: ws (the websocket object), product\_sub (the product code), security\_ty
 Output: the quotes table is printed at the frequency defined in print\_interval
 
 Example:  
-![Quotes Table][https://cmestash.chicago.cme.com/projects/SIAPOC/repos/dart_poc/browse/documents/quotes_table.png?at=refs%2Fheads%2Fintegration]
+<img src="documents/quotes_table.png" />
 
 ### Settlements Table
 
