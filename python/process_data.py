@@ -1,17 +1,19 @@
 from datetime import datetime, timedelta
 import pytz
-import json
+import pandas as pd
 from refdata_connection import *
 
 """
-    Sends WebSocket subscription message and then filters and processes websocket API data 
-    into a dataframe
+    Filters and processes websocket API data into a dataframe
 
     Args:
         data (json): the json representation of data received from the websocket API
         product_sub (str): the code for the product you want to subscribe to (eg: BTC)
         security_type (str): FUT or OPT
         dict_result (dict): dictionary to store websocket API data
+    
+    Returns:
+        DataFrame: The dataframe containing the API data
 
 """
 def process_data(data, product_sub, security_type, dict_result):
@@ -79,6 +81,8 @@ def process_data(data, product_sub, security_type, dict_result):
 
                 dict_result[key.split()[1]]["Prior Settle"] = int(float(trade_stats["settlementPrice"]))
                 dict_result[key.split()[1]]["Updated"] = local_time.strftime("%Y-%m-%d %H:%M:%S")
+        
+        return pd.DataFrame(dict_result)
 
     except KeyError:
         pass  # Handle missing keys
