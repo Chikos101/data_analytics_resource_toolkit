@@ -84,7 +84,7 @@ Description: Get the most recent settlement price for each active Globex symbol 
 Inputs: 
 
 Example Output: (DataFrame)  
-![][image2]
+<img src="documents/settlements_table.png" />
 
 # Historical Data
 
@@ -101,11 +101,12 @@ Please refer to [Historical Market Depth Data on Google Cloud Platform](https://
 TWAP Calculations  
 File location: SQL/TWAP.sql   
 Time weighted average price  
-![][image3]  
+<img src="documents/twap.png" />
+
 VWAP Calculations  
 File location: SQL/VWAP.sql  
 Volume weighted average price  
-![][image4]
+<img src="documents/vwap.png" />
 
 Inputs: 
 
@@ -119,3 +120,4 @@ Inputs:
 Output: Bigquery query table of TWAP/VWAP calculations in chronological order  
  ordered by instruments  
 Example output: 
+<img src="documents/bq_twap_vwap.png" />
