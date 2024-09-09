@@ -4,7 +4,7 @@ import json
 from process_data import *
 from utilities import *
 import pandas as pd
-import np as np
+import numpy as np
 
 
 config_file = open('config.json')
