@@ -81,7 +81,7 @@ Example:
 ### Settlements Table
 
 Description: Get the most recent settlement price for each active Globex symbol for each month for a product of the user’s choosing.  
-Inputs: 
+Inputs: ws (the websocket object), active_globex_symbols (called from and returned by the get_active_instruments helper function). Product returned depends on prior subscription parameter.
 
 Example Output: (DataFrame)  
 <img src="documents/settlements_table.png" />
