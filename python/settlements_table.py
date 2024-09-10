@@ -10,47 +10,6 @@ import numpy as np
 config_file = open('config.json')
 config = json.load(config_file)
 
-def get_active_instruments(ws, access_token):
-    products_endpoint = '/products'
-    instruments_endpoint = '/instruments'
-
-    def refdata_request(endpoint, headers, params):
-        full_url = f'{config.refdata_url}{endpoint}'
-        response = requests.get(full_url, headers=headers, params=params)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f'Error for {endpoint}:', response.status_code, response.text)
-
-    ref_headers = {
-        'User-Agent': 'Python',
-        "Authorization": f"Bearer {access_token}"
-    }
-
-    ref_parameters = {
-        "globexProductCode": f"{config.product_sub}",
-        "securityType": "FUT"
-        }
-
-    refdata_data = refdata_request(products_endpoint, ref_headers, ref_parameters)
-
-    if refdata_data:
-        instruments_url = refdata_data["_embedded"]["products"][0]["_links"]["instruments"]["href"]
-        instruments_response = requests.get(instruments_url, headers=ref_headers)
-
-        if instruments_response.status_code == 200:
-            instruments_data = instruments_response.json()
-        else:
-            print(f'Error for {instruments_url}:', instruments_response.status_code, instruments_response.text)
-
-    globex_symbols = [
-        instrument["globexSymbol"] 
-        for instrument 
-        in instruments_data["_embedded"]["instruments"]]
-    active_globex_symbols = (sorted([symbol for symbol in globex_symbols if not symbol.endswith("XXX") and symbol != "BTCG5"]))
-    
-    return active_globex_symbols
-
 
 def process_data(data):
     try:
