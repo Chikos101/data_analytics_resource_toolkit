@@ -6,6 +6,7 @@ from utilities import *
 import pandas as pd
 import numpy as np
 from refdata_connection import get_active_instruments
+from process_data import process_data
 
 
 config_file = open('config.json')
