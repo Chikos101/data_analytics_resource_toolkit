@@ -1,12 +1,10 @@
 from datetime import datetime, timedelta
+from utilities import *
+from websocket_connection import *
+from process_data import *
 import time
 import json
-from process_data import *
-from utilities import *
 import pandas as pd
-
-print_interval = 10 # How often the quotes table should refresh
-last_print_time = time.time()
 
 """
     Repeatedly prints updated quotes table
@@ -20,18 +18,21 @@ last_print_time = time.time()
     Returns:
         json: The json encoded refdata API response
 """
-def print_quotes_table(ws, product_sub, security_type, print_interval=print_interval):
+def print_quotes_table(config, duration=20):
+    ws = websocket_request(config)
+    last_print_time = time.time()
+    active_globex_symbols = get_active_instruments(config)
     # Initialize list of dictionaries
-    data_list = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in get_active_instruments(product_sub, security_type)}
-    send_subscription_message(ws, product_sub, security_type)
+    data_list = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in active_globex_symbols}
+    send_subscription_message(ws, config)
 
     while True:
         message = ws.recv()
         data = json.loads(message)
-        process_data(data, data_list)
+        process_data(data, config, data_list, active_globex_symbols)
         
         current_time = time.time()
-        if current_time - last_print_time >= print_interval:
-            print(pd.DataFrame(data_list).T)
-            print("---------------------------------------------")
-            last_print_time = current_time
+        if current_time - last_print_time >= duration:
+            break
+    
+    print(pd.DataFrame(data_list).T)

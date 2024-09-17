@@ -13,12 +13,12 @@ from utilities import *
         security_type (str): FUT or OPT
 
 """
-def realtime_streaming(ws, product_sub, security_type):
-    # Initialize list of dictionaries
-    data_list = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in get_active_instruments(product_sub,security_type)}
-    send_subscription_message(ws, product_sub, security_type)
+def realtime_streaming(ws, config):
+    active_globex_symbols = get_active_instruments(config)
+    data_list = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in active_globex_symbols}
+    send_subscription_message(ws, config)
 
     while True:
         message = ws.recv()
         data = json.loads(message)
-        process_data(data, product_sub, security_type, data_list)
+        print(process_data(data, config, data_list, active_globex_symbols))

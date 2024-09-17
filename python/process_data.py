@@ -7,7 +7,7 @@ from refdata_connection import *
     Filters and processes websocket API data into a dataframe
 
     Args:
-        data (json): the json representation of data received from the websocket API
+        websocket_data (json): the json representation of data received from the websocket API
         product_sub (str): the code for the product you want to subscribe to (eg: BTC)
         security_type (str): FUT or OPT
         dict_result (dict): dictionary to store websocket API data
@@ -16,12 +16,17 @@ from refdata_connection import *
         DataFrame: The dataframe containing the API data
 
 """
-def process_data(data, product_sub, security_type, dict_result):
+def process_data(websocket_data, config, dict_result=None, active_globex_symbols=None):
+    if active_globex_symbols is None:
+        active_globex_symbols = get_active_instruments(config)
+    
+    if dict_result is None:
+        dict_result = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in active_globex_symbols}
+    
     try:
-        message_type = data["header"]["messageType"]
-        active_globex_symbols = get_active_instruments(product_sub, security_type)
+        message_type = websocket_data["header"]["messageType"]
         if message_type == "TRD":
-            payload = data["payload"][0]
+            payload = websocket_data["payload"][0]
             instrument = payload["instrument"]
             trade_summary = payload["tradeSummary"]
             UpdateTime = payload["lastUpdateTime"]
@@ -63,7 +68,7 @@ def process_data(data, product_sub, security_type, dict_result):
                         dict_result[Symbol]["Updated"] = local_time.strftime("%Y-%m-%d %H:%M:%S")
 
         elif message_type == "STAT":
-            payload = data["payload"][0]
+            payload = websocket_data["payload"][0]
             instrument = payload["instrument"]
             trade_stats = payload["tradeStatistics"]
             UpdateTime = payload["lastUpdateTime"]
@@ -82,7 +87,7 @@ def process_data(data, product_sub, security_type, dict_result):
                 dict_result[key.split()[1]]["Prior Settle"] = int(float(trade_stats["settlementPrice"]))
                 dict_result[key.split()[1]]["Updated"] = local_time.strftime("%Y-%m-%d %H:%M:%S")
         
-        return pd.DataFrame(dict_result)
+        return pd.DataFrame(dict_result).T
 
     except KeyError:
         pass  # Handle missing keys

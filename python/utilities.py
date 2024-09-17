@@ -1,16 +1,13 @@
 import requests
 import json
 
-config_file = open('config.json')
-config = json.load(config_file)
-
 """
     Generates OAuth header to connect to websocket and refdata APIs
 
     Returns:
         str: The OAuth header with the format 'Bearer {Access Token}'
 """
-def generate_auth_header():
+def generate_auth_header(config):
     auth_url = config["auth_url"]
     client_id = config["client_id"]
     client_secret = config["client_secret"]
@@ -33,7 +30,9 @@ def generate_auth_header():
     Returns:
         json: The websocket object for further processing
 """
-def send_subscription_message(ws, product_sub, security_type):
+def send_subscription_message(ws, config):
+    security_type = config["security_type"]
+    product_sub = config["product_sub"]
     subscription_message = {
         "header": {
             "messageType": "SUBSCRIBE"

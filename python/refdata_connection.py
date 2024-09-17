@@ -4,9 +4,6 @@ from datetime import datetime
 import pandas as pd
 from utilities import generate_auth_header
 
-config_file = open('config.json')
-config = json.load(config_file)
-
 """
     Sends request to refdata API and receives a response
 
@@ -18,10 +15,12 @@ config = json.load(config_file)
     Returns:
         json: The json encoded refdata API response
 """
-def refdata_request(endpoint, product_sub, security_type):
+def refdata_request(endpoint, config):
+    security_type = config["security_type"]
+    product_sub = config["product_sub"]
     ref_headers = {
         'User-Agent': 'Python',
-        "Authorization": generate_auth_header()
+        "Authorization": generate_auth_header(config)
     }
 
     ref_parameters = {
@@ -49,11 +48,11 @@ def refdata_request(endpoint, product_sub, security_type):
     Returns:
         json: The json encoded refdata API response
 """
-def get_active_instruments(product_sub, security_type):
-    refdata_data = refdata_request('/products',product_sub,security_type)
+def get_active_instruments(config):
+    refdata_data = refdata_request('/products',config)
     ref_headers = {
         'User-Agent': 'Python',
-        "Authorization": generate_auth_header()
+        "Authorization": generate_auth_header(config)
     }
     if refdata_data:
         instruments_url = refdata_data["_embedded"]["products"][0]["_links"]["instruments"]["href"]
