@@ -18,7 +18,7 @@ import pandas as pd
     Returns:
         json: The json encoded refdata API response
 """
-def print_quotes_table(config, duration=20):
+def quotes_table(config, duration):
     ws = websocket_request(config)
     last_print_time = time.time()
     active_globex_symbols = get_active_instruments(config)
@@ -35,4 +35,4 @@ def print_quotes_table(config, duration=20):
         if current_time - last_print_time >= duration:
             break
     
-    print(pd.DataFrame(data_list).T)
+    return pd.DataFrame(data_list)
