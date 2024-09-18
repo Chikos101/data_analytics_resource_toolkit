@@ -9,35 +9,10 @@ from refdata_connection import get_active_instruments
 from process_data import process_data
 
 
-config_file = open('config.json')
-config = json.load(config_file)
-
-
-def process_data(data):
+def process_settlements_data(data):
     try:
         message_type = data["header"]["messageType"]
-        if message_type == "TRD":
-            payload = data["payload"][0]
-            instrument = payload["instrument"]
-            trade_summary = payload["tradeSummary"]
-
-            row = {
-                "SentTime": data["header"]["sentTime"],
-                "UpdateTime": payload["lastUpdateTime"],
-                "SeqNumber": data["header"]["sequenceNumber"],
-                "ExchangeMic": instrument["exchangeMic"],
-                "ProductCode": instrument["productCode"],
-                "ProductType": instrument["productType"],
-                "Symbol": instrument["symbol"],
-                "AggressorSide": trade_summary["aggressorSide"],
-                "TradePrice": float(trade_summary["tradePrice"]),
-                "TradeQty": int(trade_summary["tradeQty"]),
-                "TradeOrderCount": int(trade_summary["tradeOrderCount"]),
-                "TradeUpdateAction": trade_summary["tradeUpdateAction"],
-                "TradeEntryId": trade_summary["mdTradeEntryId"],
-            }
-            return row
-        elif message_type == "STAT":
+        if message_type == "STAT":
             payload = data["payload"][0]
             instrument = payload["instrument"]
             trade_statistics = payload["tradeStatistics"]
@@ -56,6 +31,8 @@ def process_data(data):
 
             }
             return row
+        else:
+           return None
     except KeyError:
         pass  # Handle missing keys
 
@@ -67,6 +44,9 @@ def process_data(data):
 Subscribe to the settlements data real-time data feed. Outputs the most updated data as a dataframe upon completion.
 """
 def get_settlements_data(ws, active_globex_symbols):
+  
+  active_globex_symbols = [x.split()[1] for x in active_globex_symbols]
+  print(active_globex_symbols)
    
   current_date = datetime.now()
 
@@ -86,16 +66,21 @@ def get_settlements_data(ws, active_globex_symbols):
   while True:
       message = ws.recv()
       data = json.loads(message)
-      row = process_data(data)
+      row = process_settlements_data(data)
       number_of_rows_filled = 0
+
+      if row:
+         print(row['Symbol'])
       
       if row and row['Symbol'] in active_globex_symbols:
 
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Settle']] = row['Settle']
+        print(initial_quotes_df)
 
 
         number_of_rows_filled = list(initial_quotes_df['Settle'].isna().values).count(False)
+        print("rows filled vs quotes shape ", number_of_rows_filled, initial_quotes_df.shape[0])
       
-      if number_of_rows_filled == initial_quotes_df.shape[0]: break
+      if number_of_rows_filled == (initial_quotes_df.shape[0]): break
 
   return initial_quotes_df.drop(columns = {"Open", "High", "Low", "Last", "Change", "EST. Volume", "PRIOR DAY OI"})
