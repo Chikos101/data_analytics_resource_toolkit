@@ -46,7 +46,6 @@ Subscribe to the settlements data real-time data feed. Outputs the most updated 
 def get_settlements_data(ws, active_globex_symbols):
   
   active_globex_symbols = [x.split()[1] for x in active_globex_symbols]
-  print(active_globex_symbols)
    
   current_date = datetime.now()
 
@@ -68,9 +67,6 @@ def get_settlements_data(ws, active_globex_symbols):
       data = json.loads(message)
       row = process_settlements_data(data)
       number_of_rows_filled = 0
-
-      if row:
-         print(row['Symbol'])
       
       if row and row['Symbol'] in active_globex_symbols:
 
