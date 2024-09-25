@@ -1,8 +1,9 @@
 {
-    "auth_url": "",
-    "client_id": "",
-    "client_secret": "",
-    "websocket_url": "",
-    "refdata_url": "",
-    "product_sub": ""
+    "auth_url": "https://auth.cmegroup.com/as/token.oauth2",
+    "client_id": "API_E4602_PROD",
+    "client_secret": "dME7HYr7Qe@9H$q@$rHemGnJ",
+    "websocket_url": "wss://markets.api.cmegroup.com/marketdatastream/v1",
+    "refdata_url": "https://refdata.api.cmegroup.com/refdata/v3",
+    "product_sub": "BTC",
+    "security_type": "FUT"
 }
