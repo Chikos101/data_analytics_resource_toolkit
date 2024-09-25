@@ -6,6 +6,18 @@ from utilities import *
 import pandas as pd
 import numpy as np
 
+
+
+"""
+    Processes the data for the settlements table.
+
+    Args:
+        data(json): the json representation of the message recieved from websocket
+
+    Returns:
+        row(dictionary): the dictionary representation of the data needed to construct a settlements table entry
+        --alternatively, none on retrieval failure
+"""
 def process_settlements_data(data):
     try:
         message_type = data["header"]["messageType"]
@@ -38,7 +50,15 @@ def process_settlements_data(data):
 
 
 """
-Subscribe to the settlements data real-time data feed. Outputs the most updated data as a dataframe upon completion.
+    Subscribe to the settlements data real-time data feed. Outputs the most updated settlements table for in-use products upon completion.
+
+    Args:
+        ws(websocket): the websocket that has been subscribed to.
+        active_globex_symbols(list[str]): the names of active globex symbols for the requested product(/s).
+
+
+    Returns:
+        quotes_table(DataFrame): the dataframe representation of the requested quotes table.
 """
 def get_settlements_data(ws, active_globex_symbols):
   
