@@ -12,8 +12,8 @@ class TestGenerateAuthHeader(unittest.TestCase):
     @patch('requests.post')
     def test_generate_auth_header(self, mock_get):
         response = generate_auth_header(config)
-        mock_get.asser_called_with(config["auth_url"], {'grant_type': 'client_credentials'},
-                              (config["client_id"], config["client_secret"]))
+        mock_get.assert_called_with(config["auth_url"], data={'grant_type': 'client_credentials'},
+                              auth=(config["client_id"], config["client_secret"]))
         self.assertIsInstance(response, str)
         
 
