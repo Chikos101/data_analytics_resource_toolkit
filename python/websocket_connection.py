@@ -5,6 +5,9 @@ from utilities import *
 """
     Creates a WebSocket connection.
 
+    Args:
+        config (json): the json representation of the config file
+
     Returns:
         WebSocket: The websocket object that can be used to examine market data
 """

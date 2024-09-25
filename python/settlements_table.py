@@ -1,13 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 import json
 from process_data import *
 from utilities import *
 import pandas as pd
 import numpy as np
-from refdata_connection import get_active_instruments
-from process_data import process_data
-
 
 def process_settlements_data(data):
     try:

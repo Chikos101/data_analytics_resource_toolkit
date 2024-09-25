@@ -4,6 +4,9 @@ import json
 """
     Generates OAuth header to connect to websocket and refdata APIs
 
+    Args:
+        config (json): the json representation of the config file
+
     Returns:
         str: The OAuth header with the format 'Bearer {Access Token}'
 """
@@ -24,11 +27,10 @@ def generate_auth_header(config):
 
     Args:
         ws (WebSocket): the websocket object from the connection
-        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
-        security_type (str): FUT or OPT
+        config (json): the json representation of the config file
 
     Returns:
-        json: The websocket object for further processing
+        WebSocket: The websocket object for further processing
 """
 def send_subscription_message(ws, config):
     security_type = config["security_type"]

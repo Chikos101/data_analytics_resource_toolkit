@@ -9,8 +9,7 @@ from utilities import generate_auth_header
 
     Args:
         endpoint (str): either '/products' or '/instruments'
-        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
-        security_type (str): FUT or OPT
+        config (json): the json representation of the config file
 
     Returns:
         json: The json encoded refdata API response
@@ -41,12 +40,10 @@ def refdata_request(endpoint, config):
     Retrieves list of active instruments from reference data
 
     Args:
-        endpoint (str): either '/products' or '/instruments'
-        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
-        security_type (str): FUT or OPT
+        config (json): the json representation of the config file
 
     Returns:
-        json: The json encoded refdata API response
+        list: The list of strings containing the active instruments
 """
 def get_active_instruments(config):
     refdata_data = refdata_request('/products',config)

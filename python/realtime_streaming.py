@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-import time
 import json
 from process_data import *
 from utilities import *
@@ -9,8 +7,7 @@ from utilities import *
 
     Args:
         ws (WebSocket): the websocket object from the connection
-        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
-        security_type (str): FUT or OPT
+        config (json): the json representation of the config file
 
 """
 def realtime_streaming(ws, config):

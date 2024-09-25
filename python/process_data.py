@@ -8,9 +8,9 @@ from refdata_connection import *
 
     Args:
         websocket_data (json): the json representation of data received from the websocket API
-        product_sub (str): the code for the product you want to subscribe to (eg: BTC)
-        security_type (str): FUT or OPT
-        dict_result (dict): dictionary to store websocket API data
+        config (json): the json representation of the config file
+        dict_result (dict - optional): dictionary to store websocket API data
+        active_globex_symbols (list - optional): list of strings containing the active instruments
     
     Returns:
         DataFrame: The dataframe containing the API data
