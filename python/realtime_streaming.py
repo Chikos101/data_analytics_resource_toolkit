@@ -1,6 +1,7 @@
 import json
 from process_data import *
 from utilities import *
+import time
 
 """
     Repeatedly updates dataframe using websocket API data
@@ -8,14 +9,21 @@ from utilities import *
     Args:
         ws (WebSocket): the websocket object from the connection
         config (json): the json representation of the config file
+        duration (int): the duration in seconds after which the aggregated messages are returned
+
+    Returns:
+        list: the list containing all the received messages from the websocket
 
 """
-def realtime_streaming(ws, config):
-    active_globex_symbols = get_active_instruments(config)
-    data_list = {key.split()[1]: {"Month": key.split()[0], "Last": None, "Change": None, "Prior Settle": None, "Open": None, "High": None, "Low": None, "Volume": 0, "Updated": None} for key in active_globex_symbols}
+def realtime_streaming(ws, config, duration):
     send_subscription_message(ws, config)
+    last_print_time = time.time()
+    result = []
 
     while True:
         message = ws.recv()
         data = json.loads(message)
-        print(process_data(data, config, data_list, active_globex_symbols))
+        result.append(data)
+        current_time = time.time()
+        if current_time - last_print_time >= duration:
+            return result

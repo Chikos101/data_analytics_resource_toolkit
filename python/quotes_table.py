@@ -13,7 +13,7 @@ import pandas as pd
         duration (int): the duration in seconds after which the dataframe  returned
 
     Returns:
-        json: The json encoded refdata API response
+        DataFrame: the dataframe representing the quotes table
 """
 def quotes_table(config, duration):
     ws = websocket_request(config)
@@ -32,4 +32,4 @@ def quotes_table(config, duration):
         if current_time - last_print_time >= duration:
             break
     
-    return pd.DataFrame(data_list)
+    return pd.DataFrame(data_list).T
