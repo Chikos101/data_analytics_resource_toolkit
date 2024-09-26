@@ -44,6 +44,10 @@ Inputs: config (json representation of the config file)
 
 Outputs: the Websocket object for further communication / requests
 
+```
+ws = websocket_request(config)
+```
+
 ### Send Request to Refdata API
 
 File location: python/refdata\_connection.py
@@ -53,6 +57,10 @@ Description: Creates a connection to the reference data API that provides real t
 Inputs: endpoint (either products or instruments), config (json representation of the config file)
 
 Output: the json object containing the reference data API response
+
+```
+refdata = refdata_request('/products',config)
+```
 
 ### Get the data in pandas dataframe
 
@@ -64,6 +72,14 @@ Inputs: websocket\_data (json data from the websocket API), config (json represe
 
 Output: the dataframe containing a row of the websocket data
 
+```
+ws = websocket_request(config)
+send_subscription_message(ws,config)
+message = ws.recv()
+data = json.loads(message)
+print(process_data(data,config))
+```
+
 ### Stream data in real-time
 
 File location: python/realtime\_streaming.py
@@ -74,6 +90,11 @@ Inputs: ws (the websocket object), config (json representation of the config fil
 
 Outputs: the list containing all the received messages
 
+```
+ws = websocket_request(config)
+print(realtime_streaming(ws,config,10))
+```
+
 ### Quotes Table
 
 File location: python/quotes\_table.py
@@ -83,6 +104,10 @@ Description: Recreate the [quotes table](https://www.cmegroup.com/markets/crypto
 Inputs: config (json representation of the config file), duration (the duration after which the quotes table is returned)
 
 Output: the dataframe representing the quotes table 
+
+```
+# print(quotes_table(config,10))
+```
 
 Example:  
 <img src="documents/quotes_table.png" />
@@ -97,6 +122,13 @@ Output: the dataframe representing the settlements table
 
 Example Output: (DataFrame)  
 <img src="documents/settlements_table.png" />
+
+```
+ws = websocket_request(config)
+send_subscription_message(ws, config)
+active_globex_symbols = get_active_instruments(config)
+print(get_settlements_data(ws,active_globex_symbols))
+```
 
 # Historical Data
 
