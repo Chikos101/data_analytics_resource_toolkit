@@ -92,12 +92,12 @@ def get_settlements_data(ws, active_globex_symbols):
 
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Settle']] = row['Settle']
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Month']] = row['Month']
-        print(initial_quotes_df)
+        #print(initial_quotes_df)
 
 
         number_of_rows_filled = list(initial_quotes_df['Settle'].isna().values).count(False)
-        print("rows filled vs quotes shape ", number_of_rows_filled, initial_quotes_df.shape[0])
+        #print("rows filled vs quotes shape ", number_of_rows_filled, initial_quotes_df.shape[0])
 
         if number_of_rows_filled == (initial_quotes_df.shape[0]): break
 
-  return initial_quotes_df.drop(columns = {"Open", "High", "Low", "Last", "Change", "EST. Volume", "PRIOR DAY OI"}).sort_values(by='Month', ascending = False)
+  return initial_quotes_df.drop(columns = {"Open", "High", "Low", "Last", "Change", "EST. Volume", "PRIOR DAY OI"}).reset_index(drop = True).sort_values(by='Month', ascending = True)
