@@ -7,7 +7,6 @@ import pandas as pd
 import numpy as np
 
 
-
 """
     Processes the data for the settlements table.
 
@@ -26,9 +25,13 @@ def process_settlements_data(data):
             instrument = payload["instrument"]
             trade_statistics = payload["tradeStatistics"]
 
+            if instrument.get('periodCode', "no Month") == "no Month":
+               print("no month", payload)
+
+
             row = {
                 "Symbol": instrument['symbol'],
-                "Month": f"{trade_statistics['settlementPriceTimestamp'][0:7]}",
+                "Month": f"{instrument.get('periodCode', 'no Month')[:4]}-{instrument.get('periodCode', 'no Month')[4:]}",
                 "Open": np.nan,
                 "High": np.nan,
                 "Low": np.nan,
@@ -78,22 +81,23 @@ def get_settlements_data(ws, active_globex_symbols):
       "EST. Volume": [np.nan for i in range (len(active_globex_symbols))],
       "PRIOR DAY OI": [np.nan for i in range (len(active_globex_symbols))],
   })
-   
+
   while True:
-      message = ws.recv()
-      data = json.loads(message)
-      row = process_settlements_data(data)
-      number_of_rows_filled = 0
-      
-      if row and row['Symbol'] in active_globex_symbols:
+    message = ws.recv()
+    data = json.loads(message)
+    row = process_settlements_data(data)
+    number_of_rows_filled = 0
+
+    if row and row['Symbol'] in active_globex_symbols:
 
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Settle']] = row['Settle']
+        initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Month']] = row['Month']
         print(initial_quotes_df)
 
 
         number_of_rows_filled = list(initial_quotes_df['Settle'].isna().values).count(False)
         print("rows filled vs quotes shape ", number_of_rows_filled, initial_quotes_df.shape[0])
-      
-      if number_of_rows_filled == (initial_quotes_df.shape[0]): break
 
-  return initial_quotes_df.drop(columns = {"Open", "High", "Low", "Last", "Change", "EST. Volume", "PRIOR DAY OI"})
+        if number_of_rows_filled == (initial_quotes_df.shape[0]): break
+
+  return initial_quotes_df.drop(columns = {"Open", "High", "Low", "Last", "Change", "EST. Volume", "PRIOR DAY OI"}).sort_values(by='Month', ascending = False)
