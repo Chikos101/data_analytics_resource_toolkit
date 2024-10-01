@@ -22,6 +22,15 @@ Once, the API ID is created and entitled, add a configuration file with the foll
 4. websocket\_url \- websocket API endpoint  
 5. refdata\_url \- refdata API endpoint  
 6. product\_sub \- The product code for the product of interest
+7. security\_type \- The security type for the product (FUT or OPT)
+
+How to load the config file into a python object:
+```
+import json
+
+config_file = open('config.json')
+config = json.load(config_file)
+```
 
 ## Use Cases
 
@@ -31,9 +40,13 @@ File location: python/websocket\_connection.py
 
 Description: Creates a connection to the websocket to allow the user to derive real-time data.
 
-Inputs: N/A
+Inputs: config (json representation of the config file)
 
-Outputs: Returns the Websocket object for further communication / requests
+Outputs: the Websocket object for further communication / requests
+
+```
+ws = websocket_request(config)
+```
 
 ### Send Request to Refdata API
 
@@ -41,9 +54,13 @@ File location: python/refdata\_connection.py
 
 Description: Creates a connection to the reference data API that provides real time access to CME product and instrument referential data
 
-Inputs: endpoint (either products or instruments), product\_sub (the product code), security\_type (either futures or options)
+Inputs: endpoint (either products or instruments), config (json representation of the config file)
 
 Output: the json object containing the reference data API response
+
+```
+refdata = refdata_request('/products',config)
+```
 
 ### Get the data in pandas dataframe
 
@@ -51,19 +68,32 @@ File location: python/process\_data.py
 
 Description: Allow the user to query specific data tables depending on their choice of subscription (TRD, STAT, etc) and transform those results to a pandas dataframe.
 
-Inputs: data (json data from the websocket API), product\_sub (the product code), security\_type (either futures or options), dict\_result (dictionary to store the data that should contain the quotes or settlements table headers)
+Inputs: websocket\_data (json data from the websocket API), config (json representation of the config file), dict\_result (optional - dictionary to store websocket results), active\_globex\_symbols (optional - list of active globex instruments)
 
-Outputs: N/A
+Output: the dataframe containing a row of the websocket data
+
+```
+ws = websocket_request(config)
+send_subscription_message(ws,config)
+message = ws.recv()
+data = json.loads(message)
+print(process_data(data,config))
+```
 
 ### Stream data in real-time
 
 File location: python/realtime\_streaming.py
 
-Description: Continuously update pandas dataframes with real-time data.
+Description: Continuously fetch real-time data and add it to a list
 
-Inputs: ws (the websocket object), product\_sub (the product code), security\_type (either futures or options)
+Inputs: ws (the websocket object), config (json representation of the config file), duration (the duration for which data should be streamed)
 
-Outputs: a dataframe containing the data from the websocket API
+Outputs: the list containing all the received messages
+
+```
+ws = websocket_request(config)
+print(realtime_streaming(ws,config,10))
+```
 
 ### Quotes Table
 
@@ -71,9 +101,13 @@ File location: python/quotes\_table.py
 
 Description: Recreate the [quotes table](https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin.quotes.html) with all active instruments for a product of the user’s choosing.
 
-Inputs: ws (the websocket object), product\_sub (the product code), security\_type (either futures or options), print\_interval (regularity of printing quotes table)
+Inputs: config (json representation of the config file), duration (the duration after which the quotes table is returned)
 
-Output: the quotes table is printed at the frequency defined in print\_interval
+Output: the dataframe representing the quotes table 
+
+```
+# print(quotes_table(config,10))
+```
 
 Example:  
 <img src="documents/quotes_table.png" />
@@ -81,10 +115,20 @@ Example:
 ### Settlements Table
 
 Description: Get the most recent settlement price for each active Globex symbol for each month for a product of the user’s choosing.  
+
 Inputs: ws (the websocket object), active_globex_symbols (called from and returned by the get_active_instruments helper function). Product returned depends on prior subscription parameter.
+
+Output: the dataframe representing the settlements table
 
 Example Output: (DataFrame)  
 <img src="documents/settlements_table.png" />
+
+```
+ws = websocket_request(config)
+send_subscription_message(ws, config)
+active_globex_symbols = get_active_instruments(config)
+print(get_settlements_data(ws,active_globex_symbols))
+```
 
 # Historical Data
 
