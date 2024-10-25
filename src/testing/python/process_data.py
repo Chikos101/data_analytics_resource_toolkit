@@ -4,14 +4,16 @@ import unittest
 import requests
 import json
 import pandas as pd
+import sys
+
+
+sys.path.insert(0, '/Users/e46568/dart_poc/src/main/python/')
 
 config_file = open('config.json')
 config = json.load(config_file)
 
 
 class TestProcessData(unittest.TestCase):
-    def test_trade_message(self):
-        pass
 
     #custom list of active symbols is given
     def test_stat_message_active_symbols_custom(self):
