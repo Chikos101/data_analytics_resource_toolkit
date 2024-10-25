@@ -16,7 +16,7 @@ config = json.load(config_file)
 class TestProcessData(unittest.TestCase):
 
     #custom list of active symbols is given
-    def test_stat_message_active_symbols_custom(self):
+    def test_active_symbols_custom(self):
         websocket_data = {'header': {'messageType': 'STAT', 
                                      'sentTime': '2024-10-16T00:48:39.731131000Z', 
                                      'sequenceNumber': '3', 'version': '1.0'}, 
@@ -42,7 +42,7 @@ class TestProcessData(unittest.TestCase):
         self.assertEqual(sorted(response.index), sorted([key.split()[1] for key in active_globex_instruments]))
 
     # list of active symbols is not given
-    def test_stat_message_active_symbols_none(self):
+    def test_active_symbols_none(self):
         websocket_data = {'header': {'messageType': 'STAT', 
                                      'sentTime': '2024-10-16T00:48:39.731131000Z', 
                                      'sequenceNumber': '3', 'version': '1.0'}, 
@@ -70,7 +70,7 @@ class TestProcessData(unittest.TestCase):
 
     
     # stat message, test if the prior settle value is correct
-    def test_stat_message_prior_settle(self):
+    def test_prior_settle(self):
         websocket_data = {'header': {'messageType': 'STAT', 
                                      'sentTime': '2024-10-16T00:48:39.731131000Z', 
                                      'sequenceNumber': '3', 'version': '1.0'}, 
@@ -94,6 +94,31 @@ class TestProcessData(unittest.TestCase):
         # print(active_globex_symbols)
         response = process_data(websocket_data, config, dict_result=None, active_globex_symbols=active_globex_symbols)
         self.assertEqual(response.loc['BTCX4']['Prior Settle'], 1035)
+
+    def trade_msg(self):
+        websocket_data = {'header': 
+                          {'messageType': 'TRD', 
+                           'sentTime': '2024-10-25T14:41:25.797955000Z', 
+                           'sequenceNumber': '152', 'version': '1.0'}, 
+                           'payload': [{'lastUpdateTime': '2024-09-30T19:33:19.576949789Z', 
+                                        'tradeSummary': {'aggressorSide': 'SELL', 
+                                                         'mdTradeEntryId': '1731023', 
+                                                         'tradeOrderCount': '2', 
+                                                         'tradePrice': '1250.0', 
+                                                         'tradeQty': '1', 
+                                                         'tradeUpdateAction': 'New', 
+                                                         'orderQty': [{'lastOrdQty': '1', 
+                                                                       'orderId': '747715904665'}, 
+                                                                       {'lastOrdQty': '1', 'orderId': '747715745380'}]}, 
+                                                                       'instrument': {'definitionSource': 'E', 
+                                                                                      'exchangeMic': 'XCME', 'id': 
+                                                                                      '42111299', 'marketSeqmentId': 
+                                                                                      '74', 'periodCode': '202412', 
+                                                                                      'productCode': 'BTC', 
+                                                                                      'productGroup': 'BF', 
+                                                                                      'productType': 'FUT', 
+                                                                                      'symbol': 'BTCZ4-BTCH5'}}]}
+        
 
         
 
