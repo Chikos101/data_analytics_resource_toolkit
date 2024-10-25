@@ -14,7 +14,7 @@ from utilities import *
 def websocket_request(config):
     websocket_url = config["websocket_url"]
     ws = create_connection(websocket_url,
-                       sslopt={"cert_reqs": ssl.CERT_NONE},
+                    #    sslopt={"cert_reqs": ssl.CERT_NONE},
                        header = [f"Authorization: {generate_auth_header(config)}"])
     
     return ws
