@@ -110,7 +110,7 @@ Output: the dataframe representing the quotes table
 ```
 
 Example:  
-<img src="documents/quotes_table.png" />
+<img src="src/resources/quotes_table.png" />
 
 ### Settlements Table
 
@@ -121,7 +121,7 @@ Inputs: ws (the websocket object), active_globex_symbols (called from and return
 Output: the dataframe representing the settlements table
 
 Example Output: (DataFrame)  
-<img src="documents/settlements_table.png" />
+<img src="src/resources/settlements_table.png" />
 
 ```
 ws = websocket_request(config)
@@ -145,12 +145,12 @@ Please refer to [Historical Market Depth Data on Google Cloud Platform](https://
 TWAP Calculations  
 File location: SQL/TWAP.sql   
 Time weighted average price  
-<img src="documents/twap.png" />
+<img src="src/resources/twap.png" />
 
 VWAP Calculations  
 File location: SQL/VWAP.sql  
 Volume weighted average price  
-<img src="documents/vwap.png" />
+<img src="src/resources/vwap.png" />
 
 Inputs: 
 
@@ -164,4 +164,4 @@ Inputs:
 Output: Bigquery query table of TWAP/VWAP calculations in chronological order  
  ordered by instruments  
 Example output: 
-<img src="documents/bq_twap_vwap.png" />
+<img src="src/resources/bq_twap_vwap.png" />

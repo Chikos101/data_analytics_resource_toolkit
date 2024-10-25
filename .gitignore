@@ -8,4 +8,4 @@ __pycache__/
 
 main.py
 
-python/config.json
+src/main/python/config.json
