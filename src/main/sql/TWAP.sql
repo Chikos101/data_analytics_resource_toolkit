@@ -9,7 +9,7 @@ DECLARE
 SET
   intervals = "hour"; -- Desired granularity (accepted values ['day', 'hour', 'minute'])
 SET
-  run_dates = [DATE("2024-08-12"), DATE("2024-08-13")]; -- Desired dates of interest
+  date_range = [DATE("2024-08-12"), DATE("2024-08-13")]; -- Desired date range
 SET
   run_symbols = ["ESU4"]; -- Desired symbols
   -----------------------------------------------------------------
@@ -24,7 +24,7 @@ WITH
   FROM
     `customersProject.prod_cme_globex_10_level_order_book.v_orderbook_10_lvl_futuresandoptions`
   WHERE
-    cycle_date IN UNNEST(run_dates)
+    cycle_date BETWEEN date_range[OFFSET(0)] AND date_range[OFFSET(1)]
     AND rpt_type = "TRD"
     AND globex_sym IN UNNEST(run_symbols)
     -- Add additional filters as desired

@@ -143,12 +143,12 @@ Please refer to [Historical Market Depth Data on Google Cloud Platform](https://
 ### Volume-weighted Average Price and Time-weighted Average Price (VWAP/TWAP) Calculations
 
 TWAP Calculations  
-File location: SQL/TWAP.sql   
+File location: src/main/sql/TWAP.sql   
 Time weighted average price  
 <img src="src/resources/twap.png" />
 
 VWAP Calculations  
-File location: SQL/VWAP.sql  
+File location: src/mian/sql/VWAP.sql  
 Volume weighted average price  
 <img src="src/resources/vwap.png" />
 
@@ -156,7 +156,7 @@ Inputs:
 
 * Intervals: desired granularity of calculations returned  
   * String: accepted values \[‘day’, ‘hour’, ‘minute’\]  
-* Run\_dates: dates desired to analyze  
+* Date\_range: date range desired to analyze  
   * List of DateTime values  
 * Run\_symbols: symbols desired to analyze  
   * List of strings
