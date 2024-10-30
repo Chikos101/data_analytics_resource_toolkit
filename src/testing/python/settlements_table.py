@@ -1,11 +1,14 @@
+import sys
+sys.path.insert(0, '/Users/e46568/dart_poc/src/main/python/')
+
 from settlements_table import process_settlements_data
 import json
 import pandas as pd
-import sys
+
 import unittest
 
 
-sys.path.insert(0, '/Users/e46568/dart_poc/src/main/python/')
+
 
 config_file = open('config.json')
 config = json.load(config_file)
