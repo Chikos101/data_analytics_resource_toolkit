@@ -50,3 +50,26 @@ def send_subscription_message(ws, config):
 
     ws.send(json.dumps(subscription_message))
     return ws
+
+
+def validate_config(config):
+    keys = ["auth_url", "client_id", "client_secret", "websocket_url", "refdata_url", "product_sub", "security_type"]
+    if (not all(key in config for key in keys)):
+        raise Exception("Please make sure your config file has the following keys: auth_url, client_id, client_secret, websocket_url, refdata_url, product_sub, security_type")
+    
+    auth_url = config["auth_url"]
+    websocket_url = config["websocket_url"]
+    refdata_url = config["refdata_url"]
+    security_type = config["security_type"]
+
+    if (not auth_url.startswith("https://auth")):
+        raise Exception("Invalid auth url")
+    
+    if (not websocket_url.startswith("wss://markets")):
+        raise Exception("Invalid websocket url")
+
+    if (not refdata_url.startswith("https://refdata")):
+        raise Exception("Invalid refdata url")
+
+    if security_type not in ["FUT", "OPT"]:
+        raise Exception("Please ensure that the security type is FUT or OPT")
