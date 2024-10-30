@@ -6,6 +6,6 @@ __pycache__/
 .vscode/
 .DS_Store
 
-main.py
+src/main/python/main.py
 
 src/main/python/config.json

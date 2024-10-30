@@ -14,7 +14,7 @@ For connecting to the WebSocket API and Reference Data API, an OAuth API ID and 
 
 **NOTE:** A password is also created during the API ID creation process. Remember to save it at a secure location.
 
-Once, the API ID is created and entitled, add a configuration file with the following parameters:
+Once, the API ID is created and entitled, add a configuration json file with the following parameters:
 
 1. auth\_url \- OAuth authorization server endpoint  
 2. client\_id \- API ID  
@@ -36,7 +36,7 @@ config = json.load(config_file)
 
 ### Create Websocket Connection
 
-File location: python/websocket\_connection.py
+File location: src/main/python/websocket\_connection.py
 
 Description: Creates a connection to the websocket to allow the user to derive real-time data.
 
@@ -50,7 +50,7 @@ ws = websocket_request(config)
 
 ### Send Request to Refdata API
 
-File location: python/refdata\_connection.py
+File location: src/main/python/refdata\_connection.py
 
 Description: Creates a connection to the reference data API that provides real time access to CME product and instrument referential data
 
@@ -64,7 +64,7 @@ refdata = refdata_request('/products',config)
 
 ### Get the data in pandas dataframe
 
-File location: python/process\_data.py
+File location: src/main/python/process\_data.py
 
 Description: Allow the user to query specific data tables depending on their choice of subscription (TRD, STAT, etc) and transform those results to a pandas dataframe.
 
@@ -82,7 +82,7 @@ print(process_data(data,config))
 
 ### Stream data in real-time
 
-File location: python/realtime\_streaming.py
+File location: src/main/python/realtime\_streaming.py
 
 Description: Continuously fetch real-time data and add it to a list
 
@@ -97,7 +97,7 @@ print(realtime_streaming(ws,config,10))
 
 ### Quotes Table
 
-File location: python/quotes\_table.py
+File location: src/main/python/quotes\_table.py
 
 Description: Recreate the [quotes table](https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin.quotes.html) with all active instruments for a product of the user’s choosing.
 
@@ -113,6 +113,8 @@ Example:
 <img src="src/resources/quotes_table.png" />
 
 ### Settlements Table
+
+File location: src/main/python/settlements\_table.py
 
 Description: Get the most recent settlement price for each active Globex symbol for each month for a product of the user’s choosing.  
 
