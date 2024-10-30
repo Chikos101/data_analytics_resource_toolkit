@@ -1,8 +1,7 @@
 import requests
-import json
 from datetime import datetime
 import pandas as pd
-from utilities import generate_auth_header
+from utilities import generate_auth_header, validate_config
 
 """
     Sends request to refdata API and receives a response
@@ -15,6 +14,7 @@ from utilities import generate_auth_header
         json: The json encoded refdata API response
 """
 def refdata_request(endpoint, config):
+    validate_config(config)
     security_type = config["security_type"]
     product_sub = config["product_sub"]
     ref_headers = {

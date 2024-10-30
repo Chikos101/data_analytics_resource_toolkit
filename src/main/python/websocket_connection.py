@@ -1,5 +1,4 @@
 from websocket import create_connection
-import ssl
 from utilities import *
 
 """
@@ -12,6 +11,7 @@ from utilities import *
         WebSocket: The websocket object that can be used to examine market data
 """
 def websocket_request(config):
+    validate_config(config)
     websocket_url = config["websocket_url"]
     ws = create_connection(websocket_url,
                     #    sslopt={"cert_reqs": ssl.CERT_NONE},

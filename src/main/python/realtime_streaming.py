@@ -16,6 +16,7 @@ import time
 
 """
 def realtime_streaming(ws, config, duration):
+    validate_config(config)
     send_subscription_message(ws, config)
     last_print_time = time.time()
     result = []

@@ -16,6 +16,7 @@ import pandas as pd
         DataFrame: the dataframe representing the quotes table
 """
 def quotes_table(config, duration):
+    validate_config(config)
     ws = websocket_request(config)
     last_print_time = time.time()
     active_globex_symbols = get_active_instruments(config)

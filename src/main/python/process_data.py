@@ -2,9 +2,10 @@ from datetime import datetime, timedelta
 import pytz
 import pandas as pd
 from refdata_connection import *
+from utilities import validate_config
 
 """
-    Filters and processes websocket API data into a dataframe
+    Filters and processes a single message from the websocket API data into a dataframe
 
     Args:
         websocket_data (json): the json representation of data received from the websocket API
@@ -17,6 +18,7 @@ from refdata_connection import *
 
 """
 def process_data(websocket_data, config, dict_result=None, active_globex_symbols=None):
+    validate_config(config)
     if active_globex_symbols is None:
         active_globex_symbols = get_active_instruments(config)
     

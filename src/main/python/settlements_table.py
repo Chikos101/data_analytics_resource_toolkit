@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 import json
 from process_data import *
 from utilities import *
@@ -92,11 +91,7 @@ def get_settlements_data(ws, active_globex_symbols):
 
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Settle']] = row['Settle']
         initial_quotes_df.loc[initial_quotes_df['Symbol'] == row['Symbol'], ['Month']] = row['Month']
-        #print(initial_quotes_df)
-
-
         number_of_rows_filled = list(initial_quotes_df['Settle'].isna().values).count(False)
-        #print("rows filled vs quotes shape ", number_of_rows_filled, initial_quotes_df.shape[0])
 
         if number_of_rows_filled == (initial_quotes_df.shape[0]): break
 

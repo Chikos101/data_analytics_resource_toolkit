@@ -52,6 +52,13 @@ def send_subscription_message(ws, config):
     return ws
 
 
+"""
+    Validates the config file and raises exceptions if there are invalid parameters
+
+    Args:
+        config (json): the json representation of the config file
+
+"""
 def validate_config(config):
     keys = ["auth_url", "client_id", "client_secret", "websocket_url", "refdata_url", "product_sub", "security_type"]
     if (not all(key in config for key in keys)):
