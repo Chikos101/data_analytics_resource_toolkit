@@ -3,7 +3,7 @@
 # Respository Structure
 
 The directory structure of the project looks like the following:
-
+```
 ├── src/                     <-  Contains all code and resources
 
     ├── main/                
@@ -17,6 +17,7 @@ The directory structure of the project looks like the following:
 ├── .gitignore               <-  Files that are not to be tracked by Git.
 
 └── README.md                <-  Top-level documentation page for this repository. 
+```
 
 # Overview
 
