@@ -1,5 +1,17 @@
 # DART : Data and Analytics Resource Toolkit
 
+# Respository Structure
+
+The directory structure of the project looks like the following:
+
+├── src/                     <-  Contains all code and resources
+    ├── main/                
+      ├── python/            <-  Contains Python code  
+      ├── sql/               <-  Contains SQL code
+     ├── resources           <-  Contains resources referred in the documentation
+├── .gitignore               <-  Files that are not to be tracked by Git.
+└── README.md                <-  Top-level documentation page for this repository. 
+
 # Overview
 
 This repo provides sample code in Python/SQL to help onboard CME Group’s clients with its products and data. Various use cases are discussed for different data sources and types. Check out the [CME Group Product Slate](https://www.cmegroup.com/markets/products.html) for all products.
