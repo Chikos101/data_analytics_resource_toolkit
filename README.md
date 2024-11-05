@@ -186,3 +186,7 @@ Output: Bigquery query table of TWAP/VWAP calculations in chronological order
  ordered by instruments  
 Example output: 
 <img src="src/resources/bq_twap_vwap.png" />
+
+# License
+
+This project is licensed under the terms of the BSD 3-Clause License.
