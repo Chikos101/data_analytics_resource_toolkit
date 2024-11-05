@@ -5,7 +5,7 @@ DECLARE run_symbols ARRAY <STRING>;
 --Parameters:
 -----------------------------------------------------------------
 SET intervals = "minute"; -- Desired granularity (acceted values ['day', 'hour', 'minute'])
-SET date_range = [DATE("2024-08-12"), DATE("2024-08-13")]; -- Desired date of interest
+SET date_range = [DATE("2024-08-12"), DATE("2024-08-13")]; -- Desired date range
 SET run_symbols = ["ESU4"]; -- Desired symbols
 -----------------------------------------------------------------
 WITH full_obr AS(
