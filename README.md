@@ -178,7 +178,7 @@ Inputs:
 * Intervals: desired granularity of calculations returned  
   * String: accepted values \[‘day’, ‘hour’, ‘minute’\]  
 * Date\_range: date range desired to analyze  
-  * List of DateTime values  
+  * List of 2 DateTime values  
 * Run\_symbols: symbols desired to analyze  
   * List of strings
 
