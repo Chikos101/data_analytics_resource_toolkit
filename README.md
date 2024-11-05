@@ -5,11 +5,17 @@
 The directory structure of the project looks like the following:
 
 ├── src/                     <-  Contains all code and resources
+
     ├── main/                
+
       ├── python/            <-  Contains Python code  
+
       ├── sql/               <-  Contains SQL code
+
      ├── resources           <-  Contains resources referred in the documentation
+
 ├── .gitignore               <-  Files that are not to be tracked by Git.
+
 └── README.md                <-  Top-level documentation page for this repository. 
 
 # Overview
