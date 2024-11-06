@@ -3,6 +3,8 @@ from utilities import *
 
 """
     Creates a WebSocket connection.
+    
+    Note - The credentials (username (client_id) and password (client_secret)) are environment-specific (New Release, Production)
 
     Args:
         config (json): the json representation of the config file

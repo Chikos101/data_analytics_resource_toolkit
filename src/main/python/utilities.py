@@ -25,6 +25,8 @@ def generate_auth_header(config):
 """
     Sends websocket TRD and STAT subscription message 
 
+    Note - The credentials (username (client_id) and password (client_secret)) are environment-specific (New Release, Production)
+
     Args:
         ws (WebSocket): the websocket object from the connection
         config (json): the json representation of the config file
