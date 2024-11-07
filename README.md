@@ -32,6 +32,7 @@ Real-time streaming data related to CME Group products can be accessed via the W
 For connecting to the WebSocket API and Reference Data API, an OAuth API ID and a password is required. The API ID must be created and entitled as described here [CME Market Data Over WebSocket API](https://cmegroupclientsite.atlassian.net/wiki/spaces/EPICSANDBOX/pages/46443658/CME+Market+Data+Over+WebSocket+API\#Onboarding-and-Entitlements) & [CMEReferenceDataAPIVersion3](https://cmegroupclientsite.atlassian.net/wiki/spaces/EPICSANDBOX/pages/46114039/CME+Reference+Data+API+Version+3\#CMEReferenceDataAPIVersion3-RestrictedAccess).
 
 **NOTE:** A password is also created during the API ID creation process. Remember to save it at a secure location.
+**NOTE:** The username (client_id) and password (client_secret) are environment-specific. Be careful 
 
 Once, the API ID is created and entitled, add a configuration json file with the following parameters:
 
@@ -178,7 +179,7 @@ Inputs:
 * Intervals: desired granularity of calculations returned  
   * String: accepted values \[‘day’, ‘hour’, ‘minute’\]  
 * Date\_range: date range desired to analyze  
-  * List of 2 DateTime values  
+  * List of DateTime values  
 * Run\_symbols: symbols desired to analyze  
   * List of strings
 
