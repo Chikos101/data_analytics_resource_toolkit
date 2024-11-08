@@ -10,7 +10,7 @@ The directory structure of the project looks like the following:
 
       ├── python/            <-  Contains Python code  
 
-     ├── resources           <-  Contains resources referred in the documentation
+      ├── resources           <-  Contains resources referred in the documentation
 
 ├── .gitignore               <-  Files that are not to be tracked by Git.
 
@@ -128,7 +128,7 @@ Output: the dataframe representing the quotes table
 ```
 
 Example:  
-<img src="src/resources/quotes_table.png" />
+<img src="src/main/python/resources/quotes_table.png" />
 
 ### Settlements Table
 
@@ -141,7 +141,7 @@ Inputs: ws (the websocket object), active_globex_symbols (called from and return
 Output: the dataframe representing the settlements table
 
 Example Output: (DataFrame)  
-<img src="src/resources/settlements_table.png" />
+<img src="src/main/python/resources/settlements_table.png" />
 
 ```
 ws = websocket_request(config)

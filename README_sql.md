@@ -10,7 +10,7 @@ The directory structure of the project looks like the following:
 
       ├── sql/               <-  Contains SQL code
 
-     ├── resources           <-  Contains resources referred in the documentation
+      ├── resources           <-  Contains resources referred in the documentation
 
 ├── .gitignore               <-  Files that are not to be tracked by Git.
 
@@ -35,13 +35,13 @@ Please refer to [Historical Market Depth Data on Google Cloud Platform](https://
 
 TWAP Calculations  
 File location: src/main/sql/TWAP.sql   
-Time weighted average price  
-<img src="src/resources/twap.png" />
+<!-- Time weighted average price  
+<img src="src/resources/twap.png" /> -->
 
 VWAP Calculations  
-File location: src/mian/sql/VWAP.sql  
-Volume weighted average price  
-<img src="src/resources/vwap.png" />
+File location: src/main/sql/VWAP.sql  
+<!-- Volume weighted average price  
+<img src="src/resources/vwap.png" /> -->
 
 Inputs: 
 
@@ -54,8 +54,8 @@ Inputs:
 
 Output: Bigquery query table of TWAP/VWAP calculations in chronological order  
  ordered by instruments  
-Example output: 
-<img src="src/resources/bq_twap_vwap.png" />
+<!-- Example output: 
+<img src="src/main/sql/resources/bq_twap_vwap.png" /> -->
 
 # License
 
