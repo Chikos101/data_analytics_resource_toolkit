@@ -1,0 +1,11 @@
+# Exclude Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.vscode/
+.DS_Store
+
+src/main/python/main.py
+
+#src/main/python/config.json
