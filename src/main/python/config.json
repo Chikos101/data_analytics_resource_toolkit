@@ -1,10 +1,10 @@
 {
-    "auth_url": "",
-    "client_id": "",
-    "client_secret": "",
-    "websocket_url": "",
-    "refdata_url": "",
-    "product_sub": "",
-    "security_type": ""
+    "auth_url": "https://authnr.cmegroup.com/as/token.oauth2",
+    "client_id": "api_chikos",
+    "client_secret": "*gang_@"QTDrMt6_e$6HYr$_",
+    "websocket_url": "markets.api.uat.cmegroup.com/marketdatastream/v1",
+    "refdata_url": "refdata.api.uat.cmegroup.com/refdata/v3/products",
+    "product_sub": "NQ",
+    "security_type": "FUT"
 }
 
